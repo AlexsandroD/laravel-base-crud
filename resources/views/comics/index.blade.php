@@ -31,8 +31,9 @@
                 <a class="btn btn-info my-2" style="min-width: 100px" href="{{ route('comics.edit',$comic->id) }}" role="button">Edit</a>
                 <form action="{{route('comics.destroy', $comic->id)}}" method="POST">
                     @csrf
-                    @method('DELETE')
-                <button type="submit" style="min-width: 100px" class="btn btn-danger my-2">Delete</button>
+                    @method("DELETE")
+                    <button type="submit" class="btn btn-danger my-2"style="min-width: 100px">Delete</button>
+                </form>
             </td>
         </tr>
     @endforeach
