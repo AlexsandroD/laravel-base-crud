@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-group">
-    <label for="image">Image</label>
+    <label for="image">immagini comics</label>
     <input type="text" class="form-control" id="image" placeholder="Add image here" name="image">
     </div>
 
