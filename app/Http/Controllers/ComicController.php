@@ -100,7 +100,7 @@ class ComicController extends Controller
             "title" => "required|string|max:80|unique:comics,title,{$comic->id}",
             "image" => "nullable|url",
             "description" => "required|string|2000",
-            "price" => "required|integer|min:1|max:10000",
+            "price" => "required|numeric|between:0,10000",
             "series" =>"required|string|max:80",
             "sales_date"=> "nullable|date",
             "type" => "required|string|max:80"
