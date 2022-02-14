@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comic;
+use Illuminate\Validation\Rule;
 
 class ComicController extends Controller
 {
@@ -38,17 +39,26 @@ class ComicController extends Controller
     {
        $data = $request->all();
 
-        $newComic = new Comic();
+        $request->validate([
+            "title" => "required|string|max:80|unique:comics",
+            "image" => "nullable|url",
+            "description" => "required|string|max:2000",
+            "price" => "required|integer|min:1|max:10000",
+            "series" =>"required|string|max:80",
+            "sales_date"=> "nullable|date",
+            "type" => "required|string|max:80"
+        ]);
+        // $newComic->title = $data['title'];
+        // $newComic->image = $data['image'];
+        // $newComic->description = $data['description'];
+        // $newComic->price = $data['price'];
+        // $newComic->series = $data['series'];
+        // $newComic->sale_date = $data['sale_date'];
+        // $newComic->type = $data['type'];
 
-        $newComic->title = $data['title'];
-        $newComic->image = $data['image'];
-        $newComic->description = $data['description'];
-        $newComic->price = $data['price'];
-        $newComic->series = $data['series'];
-        $newComic->sale_date = $data['sale_date'];
-        $newComic->type = $data['type'];
+        // $newComic->save();
 
-        $newComic->save();
+         $newComic = Comic::create($data);
 
         return redirect()->route('comics.show', $newComic->id);
     }
@@ -79,13 +89,25 @@ class ComicController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $idS
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,Comic $comic)
     {
         $data = $request->all();
+
+        $request->validate([
+            "title" => "required|string|max:80|unique:comics,title,{$comic->id}",
+            "image" => "nullable|url",
+            "description" => "required|string|2000",
+            "price" => "required|integer|min:1|max:10000",
+            "series" =>"required|string|max:80",
+            "sales_date"=> "nullable|date",
+            "type" => "required|string|max:80"
+        ]);
+
         $comic->update($data);
+
         // restituisco la pagina show della risorsa modificata
         return redirect()->route("comics.show", $comic->id);
     }
